@@ -19,10 +19,14 @@ env:
   # spec submodule, so the fixture count in docs/testing.md stays meaningful.
   CARVE_RS_REV: d7837249c64b88879b04cd71b8b5555ff246e16f
 
+# Every job declares timeout-minutes. Without one GitHub applies a 360-minute
+# default, roughly 900x the median job in this org, so a hung step burns hours
+# of runner time before anything stops it.
 jobs:
   native:
     name: The native bridge builds, and its tests pass
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
@@ -50,6 +54,7 @@ jobs:
   engine-pin:
     name: The pinned carve-rs revision is real
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
@@ -87,6 +92,7 @@ jobs:
   corpus:
     name: Every shared Carve fixture renders through the binding
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
